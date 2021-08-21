@@ -2,8 +2,8 @@
 
 ## Learning Goals
 
-* Define the term "record"
-* Define the term "record-oriented programming"
+- Define the term "record"
+- Define the term "record-oriented programming"
 
 ## Introduction
 
@@ -31,7 +31,7 @@ you see the terms.
 4. `apply`: This is a method _on a function_ that calls the function, just like
    `()`. You provide a new execution context as the first argument,
    traditionally called `thisArg`, and the arguments you want to send to the
-   function ***as an `Array`*** after the `thisArg`. An invocation of `apply`
+   function **_as an `Array`_** after the `thisArg`. An invocation of `apply`
    looks like: `Calculator.sum.apply(multilingualMessages, [1, 2])`
 5. `bind`: This method returns _a copy_ of the function but with the execution
    context "set" to the argument that's passed to `bind`. It looks like this:
@@ -66,13 +66,13 @@ also include a record of how many hours they worked on each day. So when a
 business needed to figure out how much to pay each person for a week's work,
 something like the following would happen:
 
-* Load up all the employees' cards into a tray
-* Feed the tray of cards into the computer
-* The computer would read in each card and calculate the hours worked for the
+- Load up all the employees' cards into a tray
+- Feed the tray of cards into the computer
+- The computer would read in each card and calculate the hours worked for the
   week per card
-* The computer would emit a new card with all the old data but this card would
+- The computer would emit a new card with all the old data but this card would
   have a new field added called something like `wagesPaidInWeek33OfYear: 550`
-* The computer would also print out a table containing the employees' names and
+- The computer would also print out a table containing the employees' names and
   how much each of them was owed
 
 > **ASIDE**: Come to think of it, iterating over a collection, performing a
@@ -116,7 +116,7 @@ In fact, a program to do `map` and `reduce` operations at scale on a cloud was
 standardized in the 2000s. Guess what it's called? [`mapReduce`][mapreduce]. It
 was pioneered and advanced as part of the secret sauce that made a small little
 company from Mountain View, California called Google become the giant it is
-today. Today you can use it under the name of [Apache Hadoop][Hadoop]
+today. Today you can use it under the name of [Apache Hadoop][hadoop]
 
 The "Go" programming language is built around building and processing records
 at scale. Record-oriented programming is not likely to go away any time soon.
@@ -158,12 +158,12 @@ few lessons.
 If you have the time, you can learn more about JavaScript and remove the
 simplifying assumptions we wrote above. You can expand your learning by:
 
-* Raising an exception if a `timeIn` is found without a matching `timeOut`
-  * [Exception Handling in JavaScript][error]
-* Figuring out how to turn a time stamp into a construct that allows for you to
+- Raising an exception if a `timeIn` is found without a matching `timeOut`
+  - [Exception Handling in JavaScript][error]
+- Figuring out how to turn a time stamp into a construct that allows for you to
   handle cross-day and non-o'clock times
-  * [Date Class Documentation][date]
-* Raising errors if the time stamp is in an invalid format
+  - [Date Class Documentation][date]
+- Raising errors if the time stamp is in an invalid format
 
 While the bar set by the tests is at one level, you can turn this into a robust
 application, if you so desire!
@@ -177,111 +177,111 @@ and what the function returns.
 
 ### `createEmployeeRecord`
 
-* **Argument(s)**
-  * A 4-element Array of a `String`, `String`, `String`, and `Number`
+- **Argument(s)**
+  - A 4-element Array of a `String`, `String`, `String`, and `Number`
     corresponding to a first name, family name, title, and pay rate per hour
-* **Returns**
-  * JavaScript `Object` with keys:
-    * `firstName`
-    * `familyName`
-    * `title`
-    * `payPerHour`
-    * `timeInEvents`
-    * `timeOutEvents`
-* **Behavior**
-  * Loads `Array` elements into corresponding `Object` properties.
+- **Returns**
+  - JavaScript `Object` with keys:
+    - `firstName`
+    - `familyName`
+    - `title`
+    - `payPerHour`
+    - `timeInEvents`
+    - `timeOutEvents`
+- **Behavior**
+  - Loads `Array` elements into corresponding `Object` properties.
     _Additionally_, initialize empty `Array`s on the properties `timeInEvents`
     and `timeOutEvents`.
 
 ### `createEmployeeRecords`
 
-* **Argument(s)**
-  * `Array` of `Arrays`
-* **Returns**
-  * `Array` of `Object`s
-* **Behavior**
-  * Converts each nested `Array` into an employee record using
+- **Argument(s)**
+  - `Array` of `Arrays`
+- **Returns**
+  - `Array` of `Object`s
+- **Behavior**
+  - Converts each nested `Array` into an employee record using
     `createEmployeeRecord` and accumulates it to a new `Array`
 
 ### `createTimeInEvent`
 
-* **Argument(s)**
-  * An employee record `Object`
-  * A date stamp (`"YYYY-MM-DD HHMM"`)
-* **Returns**
-  * The employee record
-* **Behavior**
-  * Add an `Object` with keys to the `timeInEvents` `Array` on the record
+- **Argument(s)**
+  - An employee record `Object`
+  - A date stamp (`"YYYY-MM-DD HHMM"`)
+- **Returns**
+  - The employee record
+- **Behavior**
+  - Add an `Object` with keys to the `timeInEvents` `Array` on the record
     `Object`:
-    * `type`: Set to `"TimeIn"`
-    * `hour`: Derived from the argument
-    * `date`: Derived from the argument
+    - `type`: Set to `"TimeIn"`
+    - `hour`: Derived from the argument
+    - `date`: Derived from the argument
 
 ### `createTimeOutEvent`
 
-* **Argument(s)**
-  * An employee record `Object`
-  * A date stamp (`"YYYY-MM-DD HHMM"`)
-* **Returns**
-  * The employee record
-* **Behavior**
-  * Add an `Object` with keys to the `timeOutEvents` `Array` on the record
+- **Argument(s)**
+  - An employee record `Object`
+  - A date stamp (`"YYYY-MM-DD HHMM"`)
+- **Returns**
+  - The employee record
+- **Behavior**
+  - Add an `Object` with keys to the `timeOutEvents` `Array` on the record
     `Object`:
-    * `type`: Set to `"TimeOut"`
-    * `hour`: Derived from the argument
-    * `date`: Derived from the argument
+    - `type`: Set to `"TimeOut"`
+    - `hour`: Derived from the argument
+    - `date`: Derived from the argument
 
 ### `hoursWorkedOnDate`
 
-* **Argument(s)**
-  * An employee record `Object`
-  * A date of the form `"YYYY-MM-DD"`
-* **Returns**
-  * Hours worked, an `Integer`
-* **Behavior**
-  * Given a date, find the number of hours elapsed between that date's
+- **Argument(s)**
+  - An employee record `Object`
+  - A date of the form `"YYYY-MM-DD"`
+- **Returns**
+  - Hours worked, an `Integer`
+- **Behavior**
+  - Given a date, find the number of hours elapsed between that date's
     timeInEvent and timeOutEvent
 
 ### `wagesEarnedOnDate`
 
-* **Argument(s)**
-  * An employee record `Object`
-  * A date of the form `"YYYY-MM-DD"`
-* **Returns**
-  * Pay owed
-* **Behavior**
-  * Using `hoursWorkedOnDate`, multiply the hours by the record's
+- **Argument(s)**
+  - An employee record `Object`
+  - A date of the form `"YYYY-MM-DD"`
+- **Returns**
+  - Pay owed
+- **Behavior**
+  - Using `hoursWorkedOnDate`, multiply the hours by the record's
     payRate to determine amount owed. Amount should be returned as a number.
 
 ### `allWagesFor`
 
-* **Argument(s)**
-  * An employee record `Object`
-* **Returns**
-  * Pay owed for all dates
-* **Behavior**
-  * Using `wagesEarnedOnDate`, accumulate the value of all dates worked by the
+- **Argument(s)**
+  - An employee record `Object`
+- **Returns**
+  - Pay owed for all dates
+- **Behavior**
+  - Using `wagesEarnedOnDate`, accumulate the value of all dates worked by the
     employee in the record used as context. Amount should be returned as a
     number. **HINT**: You will need to find the available dates somehow...
 
 ### `findEmployeeByFirstName`
 
-* **Argument(s)**
-  * `srcArray`: Array of employee records
-  * `firstName`: String representing a first name held in an employee record
-* **Returns**
-  * Matching record or `undefined`
-* **Behavior**
-  * Test the `firstName` field for a match with the `firstName` argument
+- **Argument(s)**
+  - `srcArray`: Array of employee records
+  - `firstName`: String representing a first name held in an employee record
+- **Returns**
+  - Matching record or `undefined`
+- **Behavior**
+  - Test the `firstName` field for a match with the `firstName` argument
 
 ### `calculatePayroll`
 
-* **Argument(s)**
-  * `Array` of employee records
-* **Returns**
-  * Sum of pay owed to all employees for all dates, as a number
-* **Behavior**
-  * Using `wagesEarnedOnDate`, accumulate the value of all dates worked by the
+- **Argument(s)**
+  - `Array` of employee records
+- **Returns**
+  - Sum of pay owed to all employees for all dates, as a number
+- **Behavior**
+  - Using `allWagesFor`, accumulate the value of all dates worked by the
     employee in the record used as context. Amount should be returned as a
     number.
 
@@ -301,12 +301,12 @@ programming to be optimal for the ease of testing and simplicity of code.
 
 ## Resources
 
-* [Record / Record-Oriented Programming][rop]
-* [JavaScript Error Class][error]
-* [JavaScript Date Class][date]
+- [Record / Record-Oriented Programming][rop]
+- [JavaScript Error Class][error]
+- [JavaScript Date Class][date]
 
 [rop]: https://en.wikipedia.org/wiki/Record_(computer_science)
 [mapreduce]: https://en.wikipedia.org/wiki/MapReduce
-[Hadoop]: https://en.wikipedia.org/wiki/Apache_Hadoop
+[hadoop]: https://en.wikipedia.org/wiki/Apache_Hadoop
 [error]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
 [date]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
