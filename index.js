@@ -43,26 +43,50 @@ function createTimeOutEvent(employeeRecord, timeOut ){
     return employeeRecord
 }
 
-function hoursWorkedOnDate(employeeRecord){
-    return parseInt(employeeRecord.timeOutEvents[0].hour - employeeRecord.timeInEvents[0].hour) / 100
+function hoursWorkedOnDate(employeeRecord, date){
+
+    let timeIn = 0;
+    let timeOut = 0;
+
+    for(let i = 0; i < employeeRecord.timeInEvents.length; i ++){
+        if (employeeRecord.timeInEvents[i].date === date){
+            timeIn = employeeRecord.timeInEvents[i].hour
+        }
+        if (employeeRecord.timeOutEvents[i].date === date){
+            timeOut = employeeRecord.timeOutEvents[i].hour
+        }
+    }
+    return (parseInt(timeOut) - parseInt(timeIn)) / 100
 }
 
-function wagesEarnedOnDate(employeeRecord){
-    return hoursWorkedOnDate(employeeRecord) * employeeRecord.payPerHour
+function wagesEarnedOnDate(employeeRecord, date){
+    return hoursWorkedOnDate(employeeRecord, date) * employeeRecord.payPerHour
 }
 
 function allWagesFor(employeeRecord){
-
-    // const daysWorked = employeeRecord.timeInEvents.length
-    // let totlaWages = 0;
-    // for(let i = 0; i < daysWorked; i++){
-    //    totlaWages +=  wagesEarnedOnDate(employeeRecord, employeeRecord.timeOutEvents[i].date)
-    // }
-    // return totlaWages -270
-    let wagesPerday = []
-    employeeRecord.forEach(e => {
-        wagesPerday.push(wagesEarnedOnDate(e))
+    let dates = employeeRecord.timeInEvents.map(element => element.date)
+    let wagesPerDay = dates.map(date => {
+        return wagesEarnedOnDate(employeeRecord, date)
     })
-    return wagesPerday.reduce((agg, curr) => agg +=curr)
-    // return totlaWages
+   return wagesPerDay.reduce((agg, current) => agg +=current)
 }
+
+function calculatePayroll(arrayOfEmployees){
+    let arrayOfWages = []
+    arrayOfEmployees.forEach(element => {
+        arrayOfWages.push(allWagesFor(element))
+    })
+    return arrayOfWages.reduce((agg, curr) => agg += curr)
+    }
+
+    function findEmployeeByFirstName(scrArray, name) {
+       const employee = scrArray.find((e) => {
+           return e.firstName === name
+       })
+       return employee
+    }
+
+    // const result = inventory.find( ({ name }) => name === 'cherries' );
+
+
+
